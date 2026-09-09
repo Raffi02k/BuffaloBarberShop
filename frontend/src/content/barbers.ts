@@ -1,0 +1,6 @@
+import type { Barber } from "./types";
+export const barbers: Barber[] = [
+    { slug: 'kenais', name: "Kenai's", role: 'Barber M · @atkenais', initials: 'K', image: '/images/kenais-portrait.webp', position: '31% center', intro: 'The street is over. We came a long way.', about: 'Från de första klippningarna i Göteborg, via den egna studion i Uddevalla, till ett nytt kapitel under namnet Kenai\'s. En personlig resa med stolen och hantverket i centrum.', tags: ['Hår', 'Skägg', 'Personlig stil'], instagram: 'https://www.instagram.com/atkenais/', galleryIds: ['kenais-cut', 'portrait', 'story'], verified: false },
+    { slug: 'anas', name: 'Anas', role: 'Barberare', initials: 'A', intro: 'Ett öga för detaljerna.', about: 'Anas arbetar med klippning och rakning. Salongens presentation på Bokadirekt anger över elva års erfarenhet inom barberaryrket.', tags: ['Klippning', 'Rakning', 'Precision'], galleryIds: [], verified: false },
+    { slug: 'waseem', name: 'Waseem', role: 'Barberare', initials: 'W', intro: 'Din stil. Hans fokus.', about: 'Waseem arbetar med klippning och skäggtrimning med fokus på kundens önskemål. Salongens presentation på Bokadirekt anger fyra års erfarenhet.', tags: ['Klippning', 'Skägg', 'Styling'], galleryIds: [], verified: false }
+];

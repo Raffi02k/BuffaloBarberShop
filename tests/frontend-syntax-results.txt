@@ -1,0 +1,5 @@
+TypeScript 5.8.3
+Parsed and transpiled 45 TS/TSX source modules.
+Syntax/transpile errors: 0
+
+This is NOT dependency-based typechecking or a Vite production build.

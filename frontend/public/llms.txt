@@ -1,0 +1,45 @@
+# Buffalo Barbershop
+
+> Buffalo Barbershop är en barbershop på Kungsportsavenyen 26 i Göteborg. Webbplatsen presenterar hårklippning, skäggtrimning, rakning och grooming samt information om salongen, behandlingar, priser och bokning.
+
+## Om salongen och platsen
+
+Buffalo Barbershop ligger på Avenyn i centrala Göteborg, Sverige. Avenyn är det vanliga namnet på Kungsportsavenyen. Webbplatsens huvudspråk är svenska; Göteborg benämns Gothenburg på engelska.
+
+- [Startsida](/): Introduktion till Buffalo Barbershop och barberarhantverket på Avenyn.
+- [Om salongen](/om-oss): Salongens presentation, hantverk och atmosfär.
+- [Kontakt och hitta hit](/kontakt): Adress, öppettider, satellitkarta och vägbeskrivning. Kontaktuppgifter visas när de är konfigurerade.
+
+## Behandlingar
+
+Webbplatsens behandlingsutbud omfattar hårklippning med klassisk form eller modern fade, skäggtrimning, rakning och kombinerade behandlingar för hår och skägg. Det finns även studentklippning, seniorklippning, barnklippning och lyxigare behandlingar samt tillval för styling och ansiktsvård.
+
+- [Alla tjänster och priser](/tjanster): Jämför behandlingarna och gå vidare till bokning.
+- [Hårklippning](/tjanster/harklippning): Klippning efter hårtyp och önskemål, klassisk form eller fade samt avslutande styling.
+- [Skägg och rakning](/tjanster/skagg): Trimning och formning för en tydlig skägglinje.
+- [Hår och skägg](/tjanster/har-och-skagg): Hårklippning, skäggformning och styling i samma behandling.
+- [The full treatment](/tjanster/lyxpaket): Paket för hår och skägg med varm handduk och ansiktsmassage.
+- [Studentklippning](/tjanster/studentklippning): Klippning och styling med studentpris. Giltigt studentkort krävs.
+- [Seniorklippning](/tjanster/seniorklippning): Klippning och styling för seniorer.
+- [Barnklippning](/tjanster/barnklippning): Klippning anpassad efter barnets önskemål.
+- [Student – hår och skägg](/tjanster/student-har-skagg): Klippning och skäggtrimning med studentkort.
+- [Lyxig hårklippning](/tjanster/lyxig-harklippning): Konsultation, anpassad klippning och styling.
+- [Lyxig skäggbehandling](/tjanster/lyxig-skaggbehandling): Varm handduk, vårdande oljor, trimning och massage.
+- [Hårtvätt och styling](/tjanster/hartvatt-styling): Hårtvätt och styling mellan klippningarna.
+- [Ansiktsbehandling](/tjanster/ansiktsbehandling): Rengöring och återfuktning efter behov.
+- [Trådning och vaxning](/tjanster/tradning-vaxning): Behandling av öron, näsa eller ansikte; område väljs vid bokning.
+
+## Bokning och priser
+
+Bokning sker externt via Bokadirekt. Välj behandling och önskad barberare i bokningssystemet, där aktuella tider, behandlingstider och slutpriser bekräftas. Webbplatsens priser är salongens prisunderlag; ett frånpris är inte ett garanterat slutpris. Kam- och saxklippning kan medföra pristillägg enligt behandlingssidorna. Uppgifter om drop-in finns inte angivna.
+
+## Fler sidor
+
+- [Barberare](/barberare): Profiler och kontaktvägar. Kenai’s bokning och priser bekräftas separat från salongens.
+- [Galleri](/galleri): Bildmaterial, detaljer och bildberättelser.
+- [Omdömen](/recensioner): Information om kundomdömen och länk till Bokadirekt.
+- [Integritet](/integritet): Information om personuppgifter och externa tjänster.
+
+## Källor och aktualitet
+
+Denna sammanfattning bygger på webbplatsens innehåll. Behandlingssidorna är källa för behandlingsbeskrivningar; bokningssystemet är källa för aktuella priser och lediga tider. Demoomdömen, referensbilder och obekräftade barberarprofiler ska inte användas som belägg för kundbetyg, utförda arbeten, anställningar eller meriter.

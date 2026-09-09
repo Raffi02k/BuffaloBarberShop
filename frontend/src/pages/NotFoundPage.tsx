@@ -1,0 +1,3 @@
+import { Link } from "react-router-dom";
+import { Icon } from "../components/Icon";
+export function NotFoundPage() { return <section className={"not-found container"}><p className={"eyebrow"}>{"Buffalo Barbershop"}</p><span className={"error-code"}>{"404"}</span><h1>{"DEN H\u00C4R STOLEN"}<br />{"VAR "}<span className={"accent"}>{"TOM."}</span></h1><p>{"Sidan finns inte. Men din n\u00E4sta klippning g\u00F6r det."}</p><div><Link to={"/"} className={"button button-primary"}>{"Till startsidan "}<Icon name={"arrow"} /></Link><Link to={"/tjanster"} className={"text-link"}>{"Se behandlingar "}<Icon name={"arrowRight"} /></Link></div></section>; }

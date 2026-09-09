@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.ssr/
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.vercel/
+.DS_Store
+npm-debug.log*
+*.log
+backend/data/*.db
+backend/data/*.sqlite*

@@ -1,0 +1,4 @@
+import { Fragment } from "react";
+import { PageHero } from "../components/PageHero";
+import { GalleryGrid } from "../components/GalleryGrid";
+export function GalleryPage() { return <Fragment><PageHero eyebrow={"The gallery"} title={<Fragment>{"BILDERNA."}<br /><span className={"accent"}>{"K\u00C4NSLAN."}</span></Fragment>} description={"M\u00E4nniskorna, verktygen och \u00F6gonblicken kring stolen."} image={"/images/kenais-cut.webp"} /><section className={"section-space container"}><GalleryGrid /><p className={"content-note"}>{"Bildmaterial fr\u00E5n projektunderlaget. St\u00E4mningsbilder \u00E4r m\u00E4rkta som bildreferenser och p\u00E5st\u00E5s inte visa Buffalos lokal eller specifika barberares arbeten. Publiceringsr\u00E4ttigheter och personers medgivanden ska bekr\u00E4ftas f\u00F6re lansering."}</p></section></Fragment>; }
