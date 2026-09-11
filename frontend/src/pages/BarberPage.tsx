@@ -7,6 +7,7 @@ import { Icon } from "../components/Icon";
 import { BookingButton } from "../components/BookingButton";
 import { site } from "../content/siteContent";
 import { GalleryGrid } from "../components/GalleryGrid";
+import { Timeline } from "../components/Timeline";
 export function BarberPage() {
   const { slug }=useParams();
   const barber=barbers.find(b => b.slug===slug);
@@ -56,7 +57,7 @@ export function BarberPage() {
       </div>
     </section>
     <section className={"section-space container editorial-grid"}>
-      <div>
+      <div className={"profile-story-heading"}>
         <p className={"eyebrow"}>
           {"Behind the chair"}
         </p>
@@ -74,7 +75,7 @@ export function BarberPage() {
         </p>
         {barber.slug==='anas'&&<Fragment>
           <p className={"eyebrow"}>{"Salongens milstolpar"}</p>
-          <div className={"profile-timeline"}>
+          <Timeline>
             <div>
               <span>{"2020"}</span>
               <p>{"Buffalo Barbershop grundas mitt under pandemin. Est. 2020 blir en del av salongens logotyp och identitet – början på resan."}</p>
@@ -87,11 +88,11 @@ export function BarberPage() {
               <span>{"Nästa kapitel"}</span>
               <p>{"Salongen öppnar för samarbeten med fristående profiler. Barber M, under namnet Kenai’s (@atkenais), tar plats behind the chair hos Buffalo på Avenyn."}</p>
             </div>
-          </div>
+          </Timeline>
         </Fragment>}
         {barber.slug==='waseem'&&<Fragment>
           <p className={"eyebrow"}>{"Din stund i stolen"}</p>
-          <div className={"profile-timeline"}>
+          <Timeline>
             <div>
               <span>{"Din stil"}</span>
               <p>{"En ny look eller en uppfräschning av din vanliga frisyr? Dina önskemål sätter riktningen."}</p>
@@ -104,13 +105,13 @@ export function BarberPage() {
               <span>{"Sista finishen"}</span>
               <p>{"De små detaljerna och stylingen knyter ihop helheten. Redo för vardagen – med din egen stil i fokus."}</p>
             </div>
-          </div>
+          </Timeline>
         </Fragment>}
         {isKenai? <Fragment>
           <p>
             {"Vi ses vid stolen."}
           </p>
-          <div className={"profile-timeline"}>
+          <Timeline>
             <div>
               <span>
                 {"2018"}
@@ -135,7 +136,7 @@ export function BarberPage() {
                 {"Ett nytt kapitel under namnet Kenai’s, i samarbete med Buffalo Barbershop på Kungsportsavenyen i Göteborg. Behind the chair på Avenyn."}
               </p>
             </div>
-          </div>
+          </Timeline>
           {!site.kenaisBookingUrl&&<p className={"booking-explanation"}>
             {"Personlig bokningsl\u00E4nk inv\u00E4ntas. Kontakta @atkenais f\u00F6r tider och pris \u2013 salongens gemensamma bokning v\u00E4ljer inte automatiskt Kenai\u2019s."}
           </p>}

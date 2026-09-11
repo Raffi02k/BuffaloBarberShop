@@ -2052,6 +2052,13 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .profile-portrait .barber-placeholder>span {
   font-size: 290px
 }
+@media (min-width:741px) {
+  .profile-story-heading {
+    position: sticky;
+    top: 116px;
+    align-self: start
+  }
+}
 .profile-timeline {
   margin-top: 36px
 }
@@ -2066,6 +2073,132 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .profile-timeline>div>span {
   color: var(--accent);
   font-size: 12px
+}
+/* Progressive enhancement: milestones remain visible without JavaScript. */
+.animated-timeline.reveal {
+  margin-block: 36px;
+  opacity: 1;
+  transform: none
+}
+.animated-timeline.reveal.reveal-ready {
+  opacity: 1;
+  transform: none
+}
+.timeline-track {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 38px;
+  isolation: isolate
+}
+.timeline-track:before,
+.timeline-track:after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  bottom: 30px;
+  left: 7px;
+  width: 1px;
+  background: var(--line);
+  z-index: -1
+}
+.timeline-track:after {
+  background: linear-gradient(180deg,var(--accent),#d0b08466);
+  transform-origin: top;
+  transition: transform 1.2s cubic-bezier(.22,1,.36,1)
+}
+.timeline-step {
+  position: relative;
+  margin: 0 0 18px;
+  padding: 0
+}
+.timeline-step:last-child {
+  margin-bottom: 0
+}
+.timeline-marker {
+  position: absolute;
+  top: 25px;
+  left: -36px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 0 5px #d0b0840c;
+  transition: opacity .5s ease var(--step-delay),transform .5s ease var(--step-delay),box-shadow .4s ease
+}
+.timeline-step>div {
+  position: relative;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(120deg,#d0b08408,transparent 75%),var(--surface);
+  transition: opacity .7s ease var(--step-delay),transform .7s cubic-bezier(.22,1,.36,1) var(--step-delay),border-color .3s ease,box-shadow .3s ease
+}
+.timeline-step>div>span {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(24px,3vw,32px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  color: var(--accent);
+  margin-bottom: 12px
+}
+.timeline-step>div>p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted)
+}
+.timeline-step:last-child>div {
+  border-color: #d0b08466;
+  background: linear-gradient(120deg,#d0b08412,transparent),var(--surface)
+}
+.timeline-step:last-child .timeline-marker {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px #d0b08412,0 0 18px #d0b08433
+}
+.animated-timeline.reveal-ready:not(.is-revealed) .timeline-track:after {
+  transform: scaleY(0)
+}
+.animated-timeline.reveal-ready:not(.is-revealed) .timeline-step>div {
+  opacity: 0;
+  transform: translateY(20px)
+}
+.animated-timeline.reveal-ready:not(.is-revealed) .timeline-marker {
+  opacity: 0;
+  transform: scale(.5)
+}
+@media (hover:hover) and (pointer:fine) {
+  .timeline-step:hover>div {
+    border-color: #d0b08488;
+    box-shadow: 0 8px 28px #00000018
+  }
+  .timeline-step:hover .timeline-marker {
+    box-shadow: 0 0 0 7px #d0b08418,0 0 20px #d0b08433
+  }
+}
+@media (max-width:600px) {
+  .timeline-track { padding-left: 28px }
+  .timeline-marker { left: -26px }
+  .timeline-step>div { padding: 20px 18px }
+  .timeline-step>div>p { font-size: 13px }
+}
+.reduce-motion .animated-timeline .timeline-track:after,
+.reduce-motion .animated-timeline .timeline-marker,
+.reduce-motion .animated-timeline .timeline-step>div {
+  opacity: 1!important;
+  transform: none!important;
+  transition: none!important
+}
+@media (prefers-reduced-motion:reduce) {
+  .animated-timeline .timeline-track:after,
+  .animated-timeline .timeline-marker,
+  .animated-timeline .timeline-step>div {
+    opacity: 1!important;
+    transform: none!important;
+    transition: none!important
+  }
 }
 .booking-explanation {
   padding: 22px;
