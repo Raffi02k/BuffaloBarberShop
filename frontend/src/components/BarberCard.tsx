@@ -4,7 +4,7 @@ import { Icon } from "./Icon";
 export function BarberCard({ barber,index=0 }: { barber: Barber; index?: number; }) {
   return <Link to={`/barberare/${barber.slug}`} className={"barber-card"}>
     <div className={"barber-card-photo"}>
-      {barber.image? <img src={barber.image} alt={`Porträtt ur ${barber.name}s projektmaterial`} style={{ objectPosition: barber.position }} width={"600"} height={"760"} loading={"lazy"} decoding={"async"} />:<div className={"barber-placeholder"} aria-label={"Portr\u00E4tt saknas"}>
+      {barber.image? <img src={barber.image} alt={`Porträtt av ${barber.name}`} style={{ objectPosition: barber.position }} width={"600"} height={"760"} loading={"lazy"} decoding={"async"} />:<div className={"barber-placeholder"} aria-label={"Portr\u00E4tt saknas"}>
         <span>
           {barber.initials}
         </span>

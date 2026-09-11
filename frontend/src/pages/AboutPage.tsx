@@ -41,6 +41,30 @@ export function AboutPage() {
         <BookingButton />
       </div>
     </section>
+    <section className={"section-space container editorial-grid"}>
+      <Reveal>
+        <p className={"eyebrow"}>{"Est. 2020 / Göteborg"}</p>
+        <h2>{"VÅR RESA."}<br /><span className={"accent"}>{"PÅ AVENYN."}</span></h2>
+      </Reveal>
+      <div className={"prose"}>
+        <p className={"lead"}>{"Från starten mitt under pandemin till en mötesplats för barberarhantverk på Avenyn."}</p>
+        <div className={"profile-timeline"}>
+          <div>
+            <span>{"2020"}</span>
+            <p>{"Buffalo Barbershop grundades mitt under pandemin. Est. 2020 är en del av salongens identitet – en påminnelse om var resan började."}</p>
+          </div>
+          <div>
+            <span>{"2024–2026"}</span>
+            <p>{"Verksamheten växer vidare på Kungsportsavenyen 26 i Göteborg. Hår, skägg och det personliga mötet i stolen står i centrum."}</p>
+          </div>
+          <div>
+            <span>{"Behind the chair"}</span>
+            <p>{"Nya samarbeten ger plats åt fristående profiler. Barber M, under namnet Kenai’s, tar med sin egen historia och sitt hantverk till salongen på Avenyn."}</p>
+          </div>
+        </div>
+        <Link className={"text-link"} to={"/barberare"}>{"Möt människorna bakom hantverket "}<Icon name={"arrow"} /></Link>
+      </div>
+    </section>
     <PhotoPanel image={"/images/barber-craft.webp"}>
       <p className={"eyebrow"}>
         {"The ritual"}
@@ -72,15 +96,12 @@ export function AboutPage() {
           {"Fr\u00E5n Barber M till Kenai\u2019s."}
         </p>
         <p>
-          {"En resa fr\u00E5n de f\u00F6rsta klippningarna i G\u00F6teborg, via en studio i Uddevalla, till ett nytt kapitel. Historien och bildmaterialet finns samlat p\u00E5 Kenai\u2019s profilsida."}
+          {"De första professionella klippningarna i Göteborg 2018. En egen privat studio i Uddevalla 2020–2022. Nu ett nytt kapitel under namnet Kenai’s, i samarbete med Buffalo Barbershop på Avenyn. Utforska historien och bilderna från resan."}
         </p>
         <Link className={"text-link"} to={"/barberare/kenais"}>
           {"M\u00F6t Kenai\u2019s "}
           <Icon name={"arrow"} />
         </Link>
-        <p className={"content-note"}>
-          {"Profilhistoriken kommer fr\u00E5n projektunderlaget och inv\u00E4ntar barberarens godk\u00E4nnande."}
-        </p>
       </Reveal>
     </section>
   </Fragment>;

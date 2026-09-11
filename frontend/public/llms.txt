@@ -8,6 +8,7 @@ Buffalo Barbershop ligger på Avenyn i centrala Göteborg, Sverige. Avenyn är d
 
 - [Startsida](/): Introduktion till Buffalo Barbershop och barberarhantverket på Avenyn.
 - [Om salongen](/om-oss): Salongens presentation, hantverk och atmosfär.
+- Salongens historia: grundad 2020, med fortsatt utveckling på Kungsportsavenyen 26 under 2024–2026 och samarbeten med fristående barberarprofiler.
 - [Kontakt och hitta hit](/kontakt): Adress, öppettider, satellitkarta och vägbeskrivning. Kontaktuppgifter visas när de är konfigurerade.
 
 ## Behandlingar
@@ -36,7 +37,10 @@ Bokning sker externt via Bokadirekt. Välj behandling och önskad barberare i bo
 ## Fler sidor
 
 - [Barberare](/barberare): Profiler och kontaktvägar. Kenai’s bokning och priser bekräftas separat från salongens.
+- [Anas](/barberare/anas): Anas Alhomsi, ägare och barberare på Buffalo Barbershop. Profilsidan presenterar salongens milstolpar från starten 2020, utvecklingen 2024–2026 samt porträtt och tre kundbilder med fade, skäggformning och klassisk sidbena.
+- [Kenai’s / Barber M](/barberare/kenais): Första professionella klippningarna i Göteborg 2018, egen privat studio i Uddevalla 2020–2022 och därefter ett nytt kapitel i samarbete med Buffalo Barbershop. Kontakt via @atkenais.
 - [Galleri](/galleri): Bildmaterial, detaljer och bildberättelser.
+- [Waseem](/barberare/waseem): Barberare med klippning, skäggtrimning och styling. Profilsidan visar porträtt och tre kundbilder med skäggformning, fade och naturlig textur.
 - [Omdömen](/recensioner): Information om kundomdömen och länk till Bokadirekt.
 - [Integritet](/integritet): Information om personuppgifter och externa tjänster.
 
