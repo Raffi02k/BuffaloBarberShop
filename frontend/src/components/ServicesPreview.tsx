@@ -9,7 +9,7 @@ export function ServicesPreview() {
   return <section className={"services-preview section-space"} id={"priser"}>
     <div className={"container services-split"}>
       <div className={"services-photo"}>
-        <img src={featured[active].image} alt={"St\u00E4mningsbild fr\u00E5n projektmaterialet"} loading={"lazy"} decoding={"async"} width={"650"} height={"850"} />
+        {featured.map((service,i) => <img src={service.image} alt={i===active? `Bild för ${service.title.toLowerCase()}`:''} aria-hidden={i!==active? true:undefined} className={`service-preview-photo ${i===active? 'is-active':''}`} loading={"lazy"} decoding={"async"} width={"650"} height={"850"} key={service.slug} />)}
         <div className={"services-photo-shade"} />
         <span className={"eyebrow"}>
           {"THE CRAFT / THE DETAILS"}

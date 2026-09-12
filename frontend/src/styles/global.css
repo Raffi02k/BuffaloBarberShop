@@ -228,7 +228,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   margin-top: 28px
 }
 .page-transition {
-  animation: page-in .45s ease both
+  animation: page-in .4s cubic-bezier(.22,1,.36,1) both
 }
 #main {
   scroll-margin-top: 88px
@@ -683,6 +683,13 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .story-title h2>span {
   color: #797d70
 }
+@media(min-width:741px) and (min-height:640px) {
+  .story-title {
+    position: sticky;
+    top: 116px;
+    align-self: start
+  }
+}
 .story-image {
   position: relative;
   overflow: hidden;
@@ -739,6 +746,18 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   width: 100%;
   object-position: 54% center;
   filter: saturate(.6)
+}
+.services-photo>.service-preview-photo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.045);
+  object-position: center 30%;
+  transition: opacity .5s ease,transform .8s cubic-bezier(.22,1,.36,1)
+}
+.services-photo>.service-preview-photo.is-active {
+  opacity: 1;
+  transform: scale(1)
 }
 .services-photo-shade {
   position: absolute;
@@ -1835,11 +1854,98 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 }
 .service-menu-row {
   display: grid;
-  grid-template-columns: 45px 1fr auto;
+  grid-template-columns: 35px clamp(150px,17vw,220px) minmax(0,1fr) auto;
   gap: 20px;
   padding-block: 35px;
   border-top: 1px solid var(--line);
-  align-items: center
+  align-items: center;
+  transition: border-color .3s,background .3s
+}
+.service-menu-photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color .3s
+}
+.service-menu-photo>img {
+  width: 100%;
+  height: 100%;
+  object-position: center 30%;
+  filter: saturate(.75);
+  transition: transform .7s cubic-bezier(.22,1,.36,1),filter .5s
+}
+.service-menu-photo:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,transparent 45%,rgba(17,18,15,.8));
+  pointer-events: none
+}
+.service-photo-caption {
+  position: absolute;
+  inset: auto 12px 14px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: transform .35s,opacity .35s
+}
+.service-photo-caption .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  transition: transform .35s
+}
+.service-menu-row h2 a {
+  transition: color .3s
+}
+.service-menu-row:focus-within {
+  border-top-color: var(--accent);
+  background: linear-gradient(90deg,transparent,rgba(208,176,132,.04),transparent)
+}
+.service-menu-row:focus-within .service-menu-photo {
+  border-color: var(--accent)
+}
+.service-menu-row:focus-within .service-menu-photo>img {
+  transform: scale(1.055);
+  filter: saturate(1)
+}
+@media(hover:hover) and (pointer:fine) {
+  .service-photo-caption {
+    opacity: 0;
+    transform: translateY(7px)
+  }
+  .service-menu-row:hover {
+    border-top-color: var(--accent);
+    background: linear-gradient(90deg,transparent,rgba(208,176,132,.04),transparent)
+  }
+  .service-menu-row:hover .service-menu-photo {
+    border-color: var(--accent)
+  }
+  .service-menu-row:hover .service-menu-photo>img {
+    transform: scale(1.055);
+    filter: saturate(1)
+  }
+  .service-menu-row:hover h2 a {
+    color: var(--accent)
+  }
+  .service-menu-row:hover .service-photo-caption,
+  .service-menu-row:focus-within .service-photo-caption {
+    opacity: 1;
+    transform: translateY(0)
+  }
+  .service-menu-photo:hover .service-photo-caption .icon {
+    transform: translate(2px,-2px)
+  }
 }
 .service-menu-row .eyebrow {
   margin-bottom: 12px;
@@ -2488,10 +2594,12 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 }
 @keyframes page-in {
   from {
-    opacity: .5
+    opacity: 0;
+    transform: translateY(10px)
   }
   to {
-    opacity: 1
+    opacity: 1;
+    transform: none
   }
 }
 @keyframes menu-in {
@@ -3282,6 +3390,17 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
     padding-top: 5px;
     font-size: 8px
   }
+  .service-menu-photo {
+    grid-column: 1/-1;
+    grid-row: 1;
+    aspect-ratio: 4/3;
+    max-height: 340px;
+    margin-bottom: 12px
+  }
+  .service-photo-caption {
+    inset: auto 18px 18px;
+    font-size: 9px
+  }
   .service-menu-row .eyebrow {
     font-size: 7px;
     margin-bottom: 10px
@@ -3666,6 +3785,44 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 }
 .reduce-motion .photo-panel>img {
   transform: none!important
+}
+/* Keep every chapter between the address line and the bottom controls.
+   Size headings against the actual sticky height, including short screens. */
+.cinema[data-reduced="false"] .cinema-scenes {
+  container-type: size;
+  --scene-top: 160px;
+  --scene-bottom: 120px;
+  --scene-reserved: 480px;
+  --scene-title-width: 11vw
+}
+.cinema[data-reduced="false"] .cinema-scene {
+  inset-block: var(--scene-top) var(--scene-bottom);
+  padding-block: 0
+}
+.cinema[data-reduced="false"] .cinema-scene h1,
+.cinema[data-reduced="false"] .cinema-scene h2 {
+  font-size: clamp(40px,min(var(--scene-title-width),calc((100cqh - var(--scene-reserved))/2.12)),166px)
+}
+.cinema[data-reduced="false"] .cinema-scene h1 {
+  --scene-title-width: 10.1vw;
+  max-width: 100%
+}
+@media(max-width:980px) {
+  .cinema[data-reduced="false"] .cinema-scenes {
+    --scene-top: 144px;
+    --scene-reserved: 464px
+  }
+}
+@media(max-width:740px) {
+  .cinema[data-reduced="false"] .cinema-scenes {
+    --scene-top: 132px;
+    --scene-bottom: 115px;
+    --scene-reserved: 448px;
+    --scene-title-width: 16vw
+  }
+  .cinema[data-reduced="false"] .cinema-scene h1 {
+    --scene-title-width: 13.4vw
+  }
 }
 .cinema[data-reduced="true"] {
   height: auto

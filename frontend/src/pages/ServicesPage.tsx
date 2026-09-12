@@ -31,8 +31,12 @@ export function ServicesPage() {
       <div className={"service-menu"} aria-live={"polite"}>
         {selected.map((s,i) => <article className={"service-menu-row"} key={s.slug}>
           <span className={"service-number"}>
-            {String(i+1).padStart(2,'0')}
+            {String(services.indexOf(s)+1).padStart(2,'0')}
           </span>
+          <Link to={`/tjanster/${s.slug}`} className={"service-menu-photo"} aria-label={`Se ${s.title.toLowerCase()} och läs om behandlingen`}>
+            <img src={s.image} alt={`Bild för ${s.title.toLowerCase()}`} width={480} height={600} loading={i===0? 'eager':'lazy'} decoding={"async"} />
+            <span className={"service-photo-caption"} aria-hidden={"true"}><span>{"Upptäck behandlingen"}</span><Icon name={"arrow"} /></span>
+          </Link>
           <div className={"service-menu-info"}>
             <span className={"eyebrow"}>
               {s.category}
