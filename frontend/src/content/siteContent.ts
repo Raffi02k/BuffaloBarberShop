@@ -20,7 +20,7 @@ export const site = {
     url: (import.meta.env.VITE_SITE_URL || 'https://example.invalid').replace(/\/$/, ''),
     indexable: import.meta.env.VITE_INDEXABLE === 'true' && import.meta.env.VITE_CONTENT_APPROVED === 'true' && hasProductionUrl(import.meta.env.VITE_SITE_URL),
     heroVideo: import.meta.env.VITE_HERO_VIDEO || '/media/barber-story-demo.mp4',
-    creditUrl: 'https://mediamagnet-three.vercel.app/', verifiedDate: 'Projektunderlag - ska godkannas fore publicering',
+    creditUrl: 'https://mediamagnet.se/', verifiedDate: 'Projektunderlag - ska godkannas fore publicering',
     hours: [
         { label: 'Måndag · Fredag', value: '10.00 – 19.00' },
         { label: 'Lördag', value: '10.00 – 17.00' },
