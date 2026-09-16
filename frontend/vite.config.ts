@@ -4,7 +4,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     esbuild: { jsx: 'automatic' },
-    server: { port: 5173, strictPort: true, proxy: {
+    server: { port: 5173, strictPort: false, proxy: {
       '/api': { target: env.API_PROXY_TARGET || 'http://127.0.0.1:8000', changeOrigin: true }
     } },
     build: { target: 'es2020', sourcemap: false },
