@@ -446,7 +446,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 }
 /* Cinematic scroll story. Native sticky positioning, no scroll hijacking. */
 .cinema {
-  height: 340svh;
+  height: 800svh;
   position: relative;
   --story-progress: 0
 }
@@ -454,7 +454,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   position: sticky;
   top: 0;
   height: 100svh;
-  min-height: 640px;
+  min-height: 0;
   overflow: clip;
   background: #201d19
 }
@@ -472,7 +472,13 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .cinema-poster.poster-2 {
   object-position: 60% 65%
 }
+.cinema-poster.poster-0 {
+  object-position: 50% 50%;
+  transform: none!important;
+  filter: saturate(.83)
+}
 .cinema-media video {
+  pointer-events: none;
   opacity: 0;
   object-position: 50% 50%;
   transition: opacity .5s;
@@ -2865,12 +2871,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
     width: 38px;
     height: 44px
   }
-  .cinema {
-    height: 280svh
-  }
   .cinema-sticky {
     height: 100svh;
-    min-height: 570px
+    min-height: 0
   }
   .cinema-topline {
     top: 96px;
@@ -2945,7 +2948,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
     font-size: 12px;
     margin-top: 20px
   }
-  .cinema-media video {
+  .cinema-media video,.cinema-poster.poster-0 {
     object-position: 57% center
   }
   .cinema-shade {
@@ -3860,7 +3863,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visi
   background: #0b100bc4
 }
 .cinema[data-reduced="true"] .scene-one {
-  background-image: url('/images/barber-craft.webp')
+  background-image: url('/media/hero-buffalo-poster.jpg')
 }
 .cinema[data-reduced="true"] .scene-two {
   background-image: url('/images/salon-atmosphere.webp')

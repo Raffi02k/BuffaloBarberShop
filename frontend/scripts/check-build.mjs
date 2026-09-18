@@ -37,7 +37,7 @@ for (const [, href] of llms.matchAll(/\]\(([^)]+)\)/g)) {
  const url = new URL(href);
  if (url.origin === new URL(site.url).origin) assert(routePaths.includes(url.pathname), `Broken llms link: ${href}`);
 }
-for (const file of ['robots.txt', 'sitemap.xml', 'llms.txt', 'favicon.png', 'images/barber-craft.webp', 'media/barber-story-demo.mp4']) await stat(`dist/${file}`);
+for (const file of ['robots.txt', 'sitemap.xml', 'llms.txt', 'favicon.png', 'images/barber-craft.webp', 'media/hero-buffalo-scrub.mp4', 'media/hero-buffalo-poster.jpg']) await stat(`dist/${file}`);
 for (const path of imagePaths) {
  assert((await stat(`dist${path}`)).isFile(), `Missing image: ${path}`);
 }

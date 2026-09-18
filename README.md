@@ -129,7 +129,7 @@ Images are in frontend/public/images, video in frontend/public/media. Use root-r
 
 ## Important content limitations
 
-The supplied barber-story-demo.mp4 is a 12-second animated still-photo sequence, NOT actual salon footage. It demonstrates the scroll effect. Replace it with approved footage, set VITE_HERO_VIDEO and update poster images in CinematicHero.tsx. Reference photographs are marked; they are not automatically photographs of Buffalo.
+The homepage uses `/media/hero-buffalo-scrub.mp4`, a scroll-optimized copy of `hero-buffalo.mp4`. GSAP + ScrollTrigger drive the video and the three existing text chapters together. Set `VITE_HERO_VIDEO` to override the source. Poster images and timing settings live in `frontend/src/content/heroStory.ts`. See [the scroll-video guide](docs/SCROLL-VIDEO.md) for encoding and adjustments. Reference photographs are marked; they are not automatically photographs of Buffalo.
 
 Prices, hours, staff relationships and biographies come from the project brief/earlier preview and require owner approval. They were not independently reverified for this delivery. Missing phone/email remain empty; configure VITE_PHONE and VITE_EMAIL with confirmed details.
 

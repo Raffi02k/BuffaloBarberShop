@@ -4,35 +4,54 @@ import { site } from "../content/siteContent";
 import { BookingButton } from "./BookingButton";
 import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
-const clamp=(n: number) => Math.max(0,Math.min(1,n));
+import { heroStory,chapterOpacity } from "../content/heroStory";
+const scrollDistance=(section: HTMLElement,stage: HTMLElement) => Math.max(1,section.offsetHeight-stage.offsetHeight);
 export function CinematicHero() {
-  const section=useRef<HTMLElement>(null),video=useRef<HTMLVideoElement>(null);
+  const section=useRef<HTMLElement>(null),stage=useRef<HTMLDivElement>(null),video=useRef<HTMLVideoElement>(null);
   const [ready,setReady]=useState(false),[active,setActive]=useState(0);
   const { reduced,paused,toggle }=useMotion();
   useEffect(() => {
-    const el=section.current;
-    if(!el)
+    const el=section.current,sticky=stage.current;
+    if(!el||!sticky)
       return;
     const movie=video.current;
+    setReady(false);
     if(reduced) {
       movie?.pause();
       el.querySelectorAll<HTMLElement>('[data-scene]').forEach(panel => { panel.inert=false; });
       return;
     }
     movie?.pause();
-    let frame=0,lastStage=-1,requestedTime=-1;
+    let disposed=false,failed=false,lastStage=-1,desiredTime=0;
+    let cleanupAnimation=() => {};
+    const playhead={ progress: 0 };
     const panels=Array.from(el.querySelectorAll<HTMLElement>('[data-scene]'));
     const posters=Array.from(el.querySelectorAll<HTMLImageElement>('[data-poster]'));
+    // Serialize seeks: always use the newest target once decoding has finished.
+    const seek=() => {
+      if(!movie||disposed||failed||movie.seeking||movie.readyState<2||!Number.isFinite(movie.duration)||movie.duration<=0)
+        return;
+      // Land precisely on the first/last frame instead of stopping just short.
+      const tolerance=playhead.progress===0||playhead.progress===1? .001:.5/heroStory.fps;
+      if(Math.abs(movie.currentTime-desiredTime)<tolerance) {
+        setReady(true);
+        return;
+      }
+      try {
+        movie.currentTime=desiredTime;
+      } catch {
+        fail();
+      }
+    };
+    const fail=() => { failed=true; setReady(false); };
     const update=() => {
-      frame=0;
-      const box=el.getBoundingClientRect();
-      const p=clamp(-box.top/Math.max(1,box.height-window.innerHeight));
-      const current=p<.32? 0:p<.7? 1:2;
+      const p=playhead.progress;
+      const current=p<heroStory.chapterStarts[0]? 0:p<heroStory.chapterStarts[1]? 1:2;
       if(current!==lastStage) {
         lastStage=current;
         setActive(current);
       }
-      const opacity=[1-clamp((p-.20)/.12),Math.min(clamp((p-.24)/.12),clamp((.76-p)/.13)),clamp((p-.67)/.13)];
+      const opacity=chapterOpacity(p);
       panels.forEach((panel,i) => {
         panel.style.opacity=String(opacity[i]);
         panel.style.visibility=opacity[i]<.02? 'hidden':'visible';
@@ -43,46 +62,91 @@ export function CinematicHero() {
       posters.forEach((poster,i) => { poster.style.opacity=String(opacity[i]); poster.style.transform=`scale(${1.035+p*.065})`; });
       el.style.setProperty('--story-progress',String(p));
       if(movie&&Number.isFinite(movie.duration)&&movie.duration>0) {
-        movie.pause();
-        const target=Math.max(0,Math.min(movie.duration-.06,p*movie.duration));
-        if(!movie.seeking&&Math.abs(target-requestedTime)>.03&&Math.abs(movie.currentTime-target)>.055) {
-          requestedTime=target;
-          movie.currentTime=target;
-        }
+        desiredTime=p*Math.max(0,movie.duration-1/heroStory.fps);
+        seek();
       }
     };
-    const schedule=() => {
-      if(!frame)
-        frame=requestAnimationFrame(update);
+    movie?.addEventListener('loadedmetadata',update);
+    movie?.addEventListener('loadeddata',update);
+    movie?.addEventListener('canplay',seek);
+    movie?.addEventListener('seeked',seek);
+    movie?.addEventListener('error',fail);
+    update();
+    // Browser-only imports keep the prerender path independent of GSAP's DOM code.
+    void Promise.all([import('gsap'),import('gsap/ScrollTrigger')]).then(([{ gsap },{ ScrollTrigger }]) => {
+      if(disposed)
+        return;
+      gsap.registerPlugin(ScrollTrigger);
+      const tween=gsap.to(playhead,{
+        progress: 1,
+        ease: 'none',
+        onUpdate: update,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top top',
+          end: () => `+=${scrollDistance(el,sticky)}`,
+          scrub: heroStory.scrub,
+          invalidateOnRefresh: true,
+        },
+      });
+      let refreshFrame=0;
+      const scheduleRefresh=() => {
+        if(disposed||refreshFrame)
+          return;
+        refreshFrame=requestAnimationFrame(() => {
+          refreshFrame=0;
+          if(!disposed)
+            tween.scrollTrigger?.refresh();
+        });
+      };
+      const resizeObserver=new ResizeObserver(scheduleRefresh);
+      resizeObserver.observe(el);
+      resizeObserver.observe(sticky);
+      // The route entrance translates the ancestor briefly; remeasure afterwards.
+      const transition=el.closest('.page-transition');
+      const refresh=(event: Event) => {
+        if(event.target===transition)
+          scheduleRefresh();
+      };
+      transition?.addEventListener('animationend',refresh);
+      cleanupAnimation=() => {
+        resizeObserver.disconnect();
+        cancelAnimationFrame(refreshFrame);
+        transition?.removeEventListener('animationend',refresh);
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
+      tween.scrollTrigger?.refresh();
+    }).catch(() => {
+      if(!disposed) {
+        fail();
+        // Keep all chapter links reachable even if the animation chunk fails.
+        el.dataset.reduced='true';
+        panels.forEach(panel => { panel.inert=false; });
+      }
+    });
+    return () => {
+      disposed=true;
+      cleanupAnimation();
+      movie?.pause();
+      movie?.removeEventListener('loadedmetadata',update);
+      movie?.removeEventListener('loadeddata',update);
+      movie?.removeEventListener('canplay',seek);
+      movie?.removeEventListener('seeked',seek);
+      movie?.removeEventListener('error',fail);
     };
-    const observer=new IntersectionObserver(([entry]) => {
-      if(!entry.isIntersecting)
-        movie?.pause();
-      else
-        schedule();
-    },{ threshold: 0 });
-    observer.observe(el);
-    window.addEventListener('scroll',schedule,{ passive: true });
-    window.addEventListener('resize',schedule);
-    movie?.addEventListener('loadedmetadata',schedule);
-    movie?.addEventListener('seeked',schedule);
-    schedule();
-    return () => { cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener('scroll',schedule); window.removeEventListener('resize',schedule); movie?.removeEventListener('loadedmetadata',schedule); movie?.removeEventListener('seeked',schedule); };
   },[reduced]);
   function jump(index: number) {
-    const el=section.current;
-    if(!el)
+    const el=section.current,sticky=stage.current;
+    if(!el||!sticky)
       return;
-    const steps=[0,.49,.9];
-    window.scrollTo({ top: el.getBoundingClientRect().top+window.scrollY+(el.offsetHeight-window.innerHeight)*steps[index],behavior: reduced? 'instant':'smooth' });
+    window.scrollTo({ top: el.getBoundingClientRect().top+window.scrollY+scrollDistance(el,sticky)*heroStory.chapterJumps[index],behavior: reduced? 'instant':'smooth' });
   }
   return <section className={"cinema"} ref={section} data-reduced={reduced} aria-label={"Buffalo Barbershop, en introduktion i tre kapitel"}>
-    <div className={"cinema-sticky"}>
+    <div className={"cinema-sticky"} ref={stage}>
       <div className={"cinema-media"} aria-hidden={"true"}>
-        {['/images/barber-craft.webp','/images/salon-atmosphere.webp','/images/kenais-cut.webp'].map((src,i) => <img data-poster src={src} alt={""} className={`cinema-poster poster-${i}`} width={"1440"} height={"900"} style={{ opacity: i===0? 1:0 }} key={src} />)}
-        {!reduced&&<video ref={video} className={ready? 'movie-ready':''} muted playsInline preload={"auto"} poster={"/images/barber-craft.webp"} onCanPlay={() => setReady(true)} onError={() => setReady(false)}>
-          <source src={site.heroVideo} type={"video/mp4"} />
-        </video>}
+        {heroStory.posters.map((src,i) => <img data-poster src={src} alt={""} className={`cinema-poster poster-${i}`} width={"1440"} height={"900"} style={{ opacity: i===0? 1:0 }} key={src} />)}
+        {!reduced&&<video ref={video} src={site.heroVideo} className={ready? 'movie-ready':''} muted playsInline preload={"auto"} />}
       </div>
       <div className={"cinema-shade"} />
       <div className={"cinema-topline"}>
