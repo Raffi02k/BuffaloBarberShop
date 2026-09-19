@@ -25,35 +25,57 @@ Videokällan anges i `frontend/src/content/siteContent.ts` och kan ersättas
 med `VITE_HERO_VIDEO`. En ersättningsvideo bör också vara intra-frame-optimerad;
 justera `fps` i `heroStory.ts` om bildfrekvensen ändras.
 
+Startbilden `frontend/public/media/hero-buffalo-poster.jpg` kommer från videons
+första bildruta. Vid byte av video, återskapa även bilden:
+
+```sh
+ffmpeg -i frontend/public/media/hero-buffalo-scrub.mp4 \
+  -frames:v 1 -q:v 2 -update 1 frontend/public/media/hero-buffalo-poster.jpg
+```
+
 ## Inställningar
 
 | Inställning | Plats | Standard |
 | --- | --- | --- |
-| Scrollsträcka | `frontend/src/styles/global.css`, `.cinema` | 400svh desktop, 300svh mobil |
+| Sektionshöjd | `frontend/src/styles/global.css`, `.cinema` | 800svh desktop och mobil |
 | Utjämning | `frontend/src/content/heroStory.ts`, `scrub` | 0.5 sekunder |
 | Beskärning | `global.css`, `.cinema-media video` | `object-fit: cover`, 50% 50%; 57% center på mobil |
 | Textövergångar | `heroStory.ts`, `chapterOpacity` | Tre överlappande in-/uttoningar |
 | Kapitelindikator/hopp | `heroStory.ts`, `chapterStarts` / `chapterJumps` | Gränser 0.32/0.7; hopp 0/0.49/0.9 |
-| Reservbilder | `heroStory.ts`, `posters` | Befintliga tre WebP-bilder |
+| Reservbilder | `heroStory.ts`, `posters` | Videons första bildruta + två befintliga WebP-bilder |
 | Rubriker och länkar | `frontend/src/components/CinematicHero.tsx` | Befintliga tre kapitel |
 
-400svh motsvarar fyra skärmhöjders sektionshöjd, varav cirka tre används för
+800svh motsvarar åtta skärmhöjders sektionshöjd, varav cirka sju används för
 scroll när den sticky vyn upptar en skärmhöjd. Webbläsarens normala scroll används.
+
+ScrollTrigger och kapitelknapparna använder samma scrollsträcka:
+`Math.max(1, section.offsetHeight - stickyStage.offsetHeight)`.
+Slutpunkten beräknas med `` end: () => `+=${scrollDistance(el,sticky)}` ``.
+En `ResizeObserver` bevakar båda elementen och samlar `refresh()` via
+`requestAnimationFrame`. Därmed fungerar ändrad sektionshöjd eller sticky-höjd
+även medan sidan är öppen, utan omladdning.
 
 ## Laddning, paus och livscykel
 
 Sökning startar först när metadata och bilddata finns och duration är giltig.
 En pågående sökning får avslutas innan den senaste önskade tidspositionen
-skickas vidare. Skillnader mindre än en halv bildruta ignoreras; sista sökbara
+skickas vidare. Skillnader mindre än en halv bildruta ignoreras, utom vid
+ändpunkterna där toleransen är 1 ms för att träffa första/sista bildrutan. Sista sökbara
 tiden är en bildruta före duration. Stillbilder visas under initial laddning
 och vid videofel. Textkapitlen fortsätter fungera även om videon inte laddas.
+
+Videoelementet har inget `poster`-attribut: en sådan bild kan ligga kvar tills
+första sökningen sker. Bildlagret bakom videon visar i stället den extraherade
+första bildrutan under laddning, med samma beskärning och färgfilter som filmen.
+När videodata finns visas videon direkt, utan att användaren behöver scrolla.
 
 Pausknappen och `prefers-reduced-motion` använder projektets befintliga statiska
 läge: videon tas bort och alla tre kapitel visas som läsbara bildsektioner.
 Länkar i osynliga animerade kapitel är `inert` och blir tillgängliga i statiskt läge.
 
 GSAP laddas endast i webbläsarens effect. Async-initiering skyddas mot unmount;
-lyssnare, tween och ScrollTrigger rensas vid navigation och rörelseändringar.
+lyssnare, ResizeObserver, schemalagd animation frame, tween och ScrollTrigger
+rensas vid navigation och rörelseändringar.
 Sidans entréanimation utlöser en ny mätning när dess förflyttning är klar.
 Videons tidsposition uppdateras inte genom React-state för varje bildruta.
 
@@ -71,6 +93,12 @@ Videons tidsposition uppdateras inte genom React-state för varje bildruta.
 - Tre SPA-navigeringar bort och tillbaka: exakt en ScrollTrigger efter varje
   återkomst, samt fungerande videostyrning.
 - Mobil skärmbild granskad för text, video, bokningsknapp och kapitelkontroller.
+- Utökade Chrome-tester: 0/25/50/100 % i båda riktningarna vid 800svh,
+  efter liveändring till 1000svh och efter ändrad sticky-höjd till 80svh.
+  Samma proportioner verifierade på mobil och för kapitelknappar. Sluttid 9,958 s.
+- Fördröjd videoladdning, första sidbesök och omladdning utan scroll:
+  rätt reservbild och därefter videons första bildruta. Skärmbilder granskade
+  före/efter laddning; avkodad videobild jämförd med startbilden automatiskt.
 
 Testerna verifierar beteende i Chrome och mobil viewport, inte faktisk
 avkodningsprestanda på fysiska telefoner eller Safari/iOS. Den upplevda
