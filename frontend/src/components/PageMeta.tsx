@@ -22,6 +22,11 @@ export function PageMeta() {
     update('property','og:description',meta.description);
     update('property','og:url',canonical);
     update('property','og:image',`${site.url}${meta.image}`);
+    update('property','og:image:secure_url',`${site.url}${meta.image}`);
+    update('property','og:image:type','image/jpeg');
+    update('property','og:image:width','1200');
+    update('property','og:image:height','630');
+    update('property','og:image:alt',meta.title);
     update('property','og:type','website');
     update('property','og:locale','sv_SE');
     update('property','og:site_name',site.name);

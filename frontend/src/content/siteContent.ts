@@ -17,7 +17,7 @@ export const site = {
     instagram: 'https://www.instagram.com/buffalobarber_1/',
     kenaisInstagram: 'https://www.instagram.com/atkenais/',
     kenaisBookingUrl: import.meta.env.VITE_KENAIS_BOOKING_URL || '',
-    url: (import.meta.env.VITE_SITE_URL || 'https://example.invalid').replace(/\/$/, ''),
+    url: (import.meta.env.VITE_SITE_URL || 'https://buffalo-barber-shop.vercel.app').replace(/\/$/, ''),
     indexable: import.meta.env.VITE_INDEXABLE === 'true' && import.meta.env.VITE_CONTENT_APPROVED === 'true' && hasProductionUrl(import.meta.env.VITE_SITE_URL),
     heroVideo: import.meta.env.VITE_HERO_VIDEO || '/media/hero-buffalo-scrub.mp4',
     creditUrl: 'https://mediamagnet.se/', verifiedDate: 'Projektunderlag - ska godkannas fore publicering',

@@ -17,11 +17,6 @@ Frontend: React 18.3.1, TypeScript, Vite, react-router-dom and hand-built CSS. N
 ```text
 BuffaloBarbershop/
   README.md
-  START-HERE.txt
-  START-FRONTEND-WINDOWS.bat
-  START-BACKEND-WINDOWS.bat
-  start-frontend.sh
-  start-backend.sh
   package.json
   vercel.json
   .gitignore
@@ -64,7 +59,7 @@ BuffaloBarbershop/
 
 ## Start on your computer
 
-Extract the ZIP first. Install Node.js 22.12+ and Python 3.11+; internet access is needed for dependency installation. On Windows, use the two BAT files in the project root. On macOS/Linux, run `bash start-frontend.sh` and `bash start-backend.sh` in two terminals. They install dependencies and create missing environment files, without overwriting existing ones. Leave both servers running while testing.
+Install Node.js 22.12+ and start the frontend using standard npm commands:
 
 ### Frontend - terminal 1
 
